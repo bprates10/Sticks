@@ -6,6 +6,8 @@
  * Time: 21:34
  */
 
+include_once dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "bootstrap.php";
+
 // Busca informação do combobox de empresa
 $empresasController = new \Controllers\EmpresasController();
 $empresas = $empresasController->buscaEmpresas();
@@ -18,17 +20,11 @@ $chamadosStatus = $chamadosStatusController->getStatusChamados();
 $chamadosPrioridadeController = new \Controllers\ChamadosController();
 $chamadosPrioridades = $chamadosPrioridadeController->getPrioridadeChamados();
 
-// Busca informação dos chamados
-$chamadosController = new \Controllers\ChamadosController();
-$chamados = $chamadosController->getChamados();
-
 // Busca informação dos e-mails
 $usuariosController = new \Controllers\UsuarioController();
 $usuariosEmails = $usuariosController->listagem();
 
 $lastUpdate = "";
-$cor_linha_chamado = "";
-$cor_coluna_prioridade = "";
 
 ?>
 
@@ -112,21 +108,6 @@ $cor_coluna_prioridade = "";
             </div>
         </div>
         <!-- FIM Icon Cards-->
-
-        <!-- Área do Gráfico-->
-        <div class="card mb-3">
-            <div class="card-header">
-                <i class="fa fa-area-chart"></i>Título do Gráfico</div>
-
-            <!-- Gráfico -->
-            <!--div class="card-body">
-              <canvas id="myAreaChart" width="100%" height="30"></canvas>
-            </div-->
-
-            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-        </div>
-        <!-- FIM Área do Gráfico-->
-
 
         <div class="row">
             <div class="col-lg-8">
@@ -391,28 +372,27 @@ $cor_coluna_prioridade = "";
                             <input type="text" cols="2" id="nome" class="form-control">
                         </div>
                     </div>
-                    <!-- E-mail -->
+                    <!-- E-mail >
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="font-normal"> E-mail Solicitante</label>
                             <select id="mail" cols="2" class="form-control">
                                 <option value="all" selected>Não Selecionado</option>
                                 <?php foreach ($usuariosEmails as $email) : ?>
-                                    <option value="<?= $email->getId(); ?>"><?= $email->getEmail(); ?></option>
+                                    <option value="<?= $email->getEmail(); ?>"><?= $email->getEmail(); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
-                    <!-- DATA -->
+                    <!-- DATA >
                     <div class="fa-calendar-times-o">
                         <div class="form-group">
                             <label class="font-normal">Data</label>
                             <input type="date" id="data">
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <!-- EMPRESA Origem -->
+                </div-->
+                    <!-- EMPRESA Origem do chamado -->
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="font-normal"> Empresa Origem</label>
@@ -424,10 +404,10 @@ $cor_coluna_prioridade = "";
                             </select>
                         </div>
                     </div>
-                    <!-- EMPRESA DESTINO -->
+                    <!-- EMPRESA Parceira -->
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="font-normal">Empresa Destino</label>
+                            <label class="font-normal"> Empresa Parceira</label>
                             <select id="destino" cols="2" class="form-control">
                                 <option value="all" selected>Todas</option>
                                 <?php foreach ($empresas as $empresa) : ?>
@@ -436,10 +416,12 @@ $cor_coluna_prioridade = "";
                             </select>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <!-- STATUS -->
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="font-normal">Status</label>
+                            <label class="font-normal"> Status</label>
                             <select id="status" cols="2" class="form-control">
                                 <option value="all" selected>Ambos</option>
                                 <?php foreach ($chamadosStatus as $status) : ?>
@@ -451,7 +433,19 @@ $cor_coluna_prioridade = "";
                     <!-- PRIORIDADE -->
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="font-normal">Prioridade</label>
+                            <label class="font-normal"> Prioridade</label>
+                            <select id="prioridade" cols="2" class="form-control">
+                                <option value="all" selected>Todos</option>
+                                <?php foreach ($chamadosPrioridades as $prioridade) : ?>
+                                    <option value="<?= $prioridade->getId(); ?>"><?= $prioridade->getId() . " - " . $prioridade->getDescricao(); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- ATENDENTE -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="font-normal"> Atendente</label>
                             <select id="prioridade" cols="2" class="form-control">
                                 <option value="all" selected>Todos</option>
                                 <?php foreach ($chamadosPrioridades as $prioridade) : ?>
@@ -471,7 +465,7 @@ $cor_coluna_prioridade = "";
                         <i class="fa fa-plus-square"></i>Novo</button-->
                     <button type="button" class="btn btn-secondary btn-fill pull-right"  style="margin-right: 5px" onclick="pesquisarChamado();">
                         <i class="fa    fa-search"></i>Pesquisar</button>
-                    <button type="button" class="btn btn-danger btn-fill pull-right"  style="margin-right: 5px" onclick="importCall();">
+                    <button type="button" class="btn btn-danger btn-fill pull-right"  style="margin-right: 5px" onclick="importarChamados();">
                         <i class="fa fa-search"></i>Importar</button>
                 </div>
             </div>
@@ -480,10 +474,7 @@ $cor_coluna_prioridade = "";
             <!--i class="fa fa-refresh" onclick="lerEmail();"></i> Atualização de Chamados <i class="fa fa-refresh" onclick="lerEmail();"></i-->
 
             <!-- Conteúdo Chamados -->
-            <div id="listagem_chamados">
-
-            </div>
-
+            <div id="listagem_chamados"></div>
             <!-- FIM Conteúdo Chamados -->
 
             <!--div class="card-footer small text-muted">Atualizado em: < $lastUpdate->format('d-m-Y H:i:s'); ?></div-->
@@ -528,14 +519,14 @@ $cor_coluna_prioridade = "";
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Page level plugin JavaScript-->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- MOVIDO LISTA_RELATORIOS.PHP script src="vendor/chart.js/Chart.min.js"></script-->
     <script src="vendor/datatables/jquery.dataTables.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
     <script src="js/sb-admin-datatables.min.js"></script>
-    <script src="js/sb-admin-charts.min.js"></script>
+    <!-- MOVIDO LISTA_RELATORIOS.PHP script src="js/sb-admin-charts.min.js"></script-->
 </div>
 <!-- FIM Card Chamados -->
 
@@ -544,7 +535,7 @@ $cor_coluna_prioridade = "";
 
         var id         = ($("#nro").val()).trim();
         var nome       = ($("#nome").val()).trim();
-        var email      = ($("#mail").val()).trim();
+        //var email      = ($("#mail").val()).trim();
         var origem     = ($("#origem").val()).trim();
         var destino    = ($("#destino").val()).trim();
         var status     = ($("#status").val()).trim();
@@ -554,22 +545,33 @@ $cor_coluna_prioridade = "";
 
         $.ajax({
             "url": url,
-            "type": 'GET',
+            "type": 'POST',
             "data": {
                 id : id,
                 nome: nome,
-                email: email,
+                //email: email,
                 origem: origem,
                 destino: destino,
                 status: status,
                 prioridade: prioridade
             }
         }).done(function (resp) {
-            //$("#listagem_chamados").html(resp);
-            //$('#div_principal').load(resp);
-            alert("ok");
+            $("#listagem_chamados").html(resp);
         }).fail(function (fail) {
             alert("fail");
+        });
+    }
+
+    function importarChamados() {
+
+        $.ajax({
+            "url" : "../app/Controllers/ChamadosController.php",
+            "type": 'POST',
+            "data": { act: 'importar_chamados'}
+        }).done(function (resp) {
+            alert(resp);
+        }).fail(function (resp) {
+            alert("FAIL");
         });
     }
 </script>

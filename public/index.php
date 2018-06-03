@@ -63,14 +63,16 @@ include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATO
                 </a>
             </li>
 
-            <!-- Abaixo estão listados os demais navegadores do NavBar -->
-            <!-- Outros navegadores -->
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-              <a class="nav-link" href="charts.html">
-                <i class="fa fa-fw fa-area-chart"></i>
-                <span class="nav-link-text">Charts</span>
-              </a>
+            <!-- Menu Relatórios/Gráficos -->
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Relatórios">
+                <a class="nav-link">
+                    <i class="fa fa-fw fa-area-chart"></i>
+                    <span class="nav-link-text" onclick="buscaPagina('relatorios')">Relatórios</span>
+                </a>
             </li>
+
+            <!-- Abaixo estão listados os demais navegadores do NavBar -->
+            <!-- Outros navegadores >
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
               <a class="nav-link" href="tables.html">
                 <i class="fa fa-fw fa-table"></i>
@@ -299,12 +301,14 @@ include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATO
         var url = '';
 
         if (param == 'chamados')
-            url = 'view/chamados/lista_chamados.php'
+            url = 'view/chamados/lista_chamados.php';
+        if (param == 'relatorios')
+            url = 'view/relatorios/lista_relatorios.php';
 
         $.ajax({
             url: url,
-            type: 'POST' //ou o tipo que vc precisar
-        }).success(function(data) {
+            type: 'POST'
+        }).done(function(data) {
             $("#div_master").html(data);
         }).error(function() {
             alert('falha ao trazer página');
