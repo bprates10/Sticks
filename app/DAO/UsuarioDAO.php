@@ -12,7 +12,7 @@ use \Helpers\Conexao;
 
 class UsuarioDAO extends BaseDAO
 {
-    public function getUsuarios()
+    public function getUsuarios($id = "", $mail = "")
     {
         $resultados = [];
         try
@@ -20,6 +20,10 @@ class UsuarioDAO extends BaseDAO
             $con = $this->getConexao();
             $con->connect();
             $sql = "SELECT * FROM USUARIOS";
+            if (!empty($id))
+                $sql .= " WHERE ID = {$id}";
+            else if (!empty($mail))
+                $sql .= " WHERE LOWER(EMAIL) = LOWER('$mail')";
             $res = $con->query($sql);
 
             foreach($con->fetchAll($res) as $k => $v) {
@@ -27,6 +31,7 @@ class UsuarioDAO extends BaseDAO
                 $usuario->setId($v['ID']);
                 $usuario->setNome($v['NOME']);
                 $usuario->setEmail($v['EMAIL']);
+                $usuario->setPwd($v['SENHA']);
                 //$usuario->setLogin($v['LOGIN']);
                 $resultados[] = $usuario;
             }
@@ -40,31 +45,48 @@ class UsuarioDAO extends BaseDAO
         return $resultados;
     }
 
-    /*public function validaUsuario($user, $pass)
+    public function isCadastrado($params)
     {
         try
         {
-            $user = strtoupper($user);
-            $pass = strtoupper($pass);
+            $mail = strtolower($params['mailbox'] . '@' . $params['host']);
+            $obj = $this->getUsuarios(null, $mail);
+            //varz($obj);
 
+            // Se o e-mail já está cadastrado no banco de dados, retorna a ID cadastrada
+            if (!empty($obj)) {
+                return $obj[0]->getId();
+            }
+            // Se não estiver cadastrado, cadastra e retorna a ID cadastrada
+            else {
+                //varzx($params);
+                $this->insertUsuario($params);
+            }
+        } catch (\Exception $e) {
+            var_dump($e->getMessage());
+            die("Erro");
+        } /*finally {
+            $con->close();
+        }*/
+    }
+
+    public function insertUsuario($params) {
+
+        try {
             $con = $this->getConexao();
             $con->connect();
-            $sql = "SELECT COUNT(*) AS CNT FROM USUARIO WHERE UPPER(LOGIN) = '{$user}' AND SENHA = '{$pass}'";
-            $res = $con->query($sql);
 
-            foreach($con->fetchAll($res) as $k => $v) {
-                $resultado = $v['CNT'];
-            }
+            $nome = tirarAcentos($params['personal']);
+            $mail = $params['mailbox'] . '@' . $params['host'];
+
+            $sql = "INSERT INTO USUARIOS (nome, email) VALUES ('{$nome}', '{$mail}')";
+            $con->query($sql);
+            $this->isCadastrado($params);
 
         } catch (\Exception $e) {
             var_dump($e->getMessage());
             die("Erro");
-        } finally {
-            $con->close();
         }
 
-        if ($resultado > 0)
-            return true;
-        return false;
-    }*/
+    }
 }
