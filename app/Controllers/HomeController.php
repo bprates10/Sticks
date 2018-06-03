@@ -8,13 +8,6 @@
 
 namespace Controllers;
 
-/*
-        //$('#div_principal').innerHTML = "";
-
-
-        $('#div_principal').load(url);
- */
-
 if (isset($_POST['act']) && !empty($_POST['act']))
 {
     $redirect = new HomeController();
