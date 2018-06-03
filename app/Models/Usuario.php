@@ -7,6 +7,7 @@ class Usuario
     private $id;
     private $nome;
     private $email;
+    private $pwd;
     private $login;
 
     /* Getlers e Setlers */
@@ -32,6 +33,14 @@ class Usuario
     }
     public function setEmail($email) {
         $this->email = $email;
+    }
+
+    // SENHA
+    public function getPwd() {
+        return $this->pwd;
+    }
+    public function setPwd($pwd) {
+        $this->pwd = $pwd;
     }
 
     // LOGIN

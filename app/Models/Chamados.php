@@ -19,12 +19,12 @@ class Chamados
     private $idUser;
     private $idSupport;
     private $idCompany;
+    private $idPartner;
 
     public function getId()
     {
         return $this->id;
     }
-
     public function setId ($id)
     {
         $this->id = $id;
@@ -34,7 +34,6 @@ class Chamados
     {
         return $this->title;
     }
-
     public function setTitle ($title)
     {
         $this->title = $title;
@@ -44,7 +43,6 @@ class Chamados
     {
         return $this->body;
     }
-
     public function setBody ($body)
     {
         $this->body = $body;
@@ -54,7 +52,6 @@ class Chamados
     {
         return $this->idStatus;
     }
-
     public function setIdStatus ($idStatus)
     {
         $this->idStatus = $idStatus;
@@ -64,7 +61,6 @@ class Chamados
     {
         return $this->idPriority;
     }
-
     public function setIdPriority ($idPriority)
     {
         $this->idPriority = $idPriority;
@@ -74,7 +70,6 @@ class Chamados
     {
         return $this->idUser;
     }
-
     public function setIdUser ($idUser)
     {
         $this->idUser = $idUser;
@@ -84,7 +79,6 @@ class Chamados
     {
         return $this->idSupport;
     }
-
     public function setIdSupport ($idSupport)
     {
         $this->idSupport = $idSupport;
@@ -94,9 +88,17 @@ class Chamados
     {
         return $this->idCompany;
     }
-
     public function setIdCompany ($idCompany)
     {
         $this->idCompany = $idCompany;
+    }
+
+    public function getIdPartner()
+    {
+        return $this->idPartner;
+    }
+    public function setIdPartner ($idPartner)
+    {
+        $this->idPartner = $idPartner;
     }
 }
