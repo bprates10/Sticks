@@ -13,10 +13,6 @@ use Models\Usuario;
 
 class UsuarioController
 {
-    public function index() {
-
-    }
-
     public function listagem() {
         $dao = new UsuarioDAO();
         return $dao->getUsuarios();
