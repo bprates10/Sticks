@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * User: bprat
- * Date: 05/05/2018
+ * Date: 05/05/2018w
  * Time: 17:35
  */
 
@@ -71,14 +71,16 @@ include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATO
                 </a>
             </li>
 
+            <!-- Menu de Configuração de Usuários -->
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Config_Users">
+                <a class="nav-link">
+                    <i class="fa fa-fw fa-table"></i>
+                    <span class="nav-link-text" onclick="buscaPagina('configUsers')">Configuração de Usuários</span>
+                </a>
+            </li>
+
             <!-- Abaixo estão listados os demais navegadores do NavBar -->
             <!-- Outros navegadores >
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-              <a class="nav-link" href="tables.html">
-                <i class="fa fa-fw fa-table"></i>
-                <span class="nav-link-text">Tables</span>
-              </a>
-            </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
               <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
                 <i class="fa fa-fw fa-wrench"></i>
@@ -287,16 +289,9 @@ include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATO
 
 <script>
 
-    /*$(function() {
-        $("#datepicker").datepicker({
-            showOn: "button",
-            buttonText: "Select date"
-        });
-    });*/
-
     function buscaPagina(param) {
 
-        alert(param);
+        //alert(param);
 
         var url = '';
 
@@ -304,6 +299,8 @@ include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATO
             url = 'view/chamados/lista_chamados.php';
         if (param == 'relatorios')
             url = 'view/relatorios/lista_relatorios.php';
+        if (param == 'configUsers')
+            url = 'view/configs/lista_usuarios.php';
 
         $.ajax({
             url: url,
@@ -315,17 +312,4 @@ include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATO
         });
     }
 
-    function lerEmail() {
-
-        $.ajax({
-            "url": "../app/Controllers/EmailsController.php",
-            "type": 'POST',
-            "act": "lerEmail"
-        }).done(function (resp) {
-            alert(resp);
-        }).fail(function (resp) {
-            alert("FAIL");
-        });
-
-    }
 </script>

@@ -26,4 +26,18 @@ abstract class BaseDAO
         }
         return $con;
     }
+
+    /* Busca a sequence no bd.
+     * Recebe por parâmetro a tabela, a coluna e um inteiro que definirá se a sequence retornada será a atual ou a próxima
+     * Retorna o valor da sequence. */
+    protected function getSequence($table, $column, $count = 0) {
+        $con = $this->getConexao();
+        $con->connect();
+
+        $sql = "SELECT MAX($column) + $count as sequence FROM $table";
+        $query = $con->query($sql);
+        $max = $con->fetchAll($query);
+        $max = $max[0];
+        return $max['sequence'];
+    }
 }

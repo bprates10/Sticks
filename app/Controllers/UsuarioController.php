@@ -13,8 +13,8 @@ use Models\Usuario;
 
 class UsuarioController
 {
-    public function listagem() {
+    public function listagem($params = []) {
         $dao = new UsuarioDAO();
-        return $dao->getUsuarios();
+        return $dao->getUsuarios($params);
     }
 }

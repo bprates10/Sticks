@@ -12,9 +12,15 @@ use \Helpers\Conexao;
 
 class UsuarioDAO extends BaseDAO
 {
-    public function getUsuarios($id = "", $mail = "")
+    public function getUsuarios($params = [])
     {
+        varz("parametros getUsuarios");
+        varz($params);
         $resultados = [];
+        (isset($params['id']) && !empty($params['id'])) ? $id = $params['id'] : $id = "";
+        (isset($params['email']) && ($params['email']) != 'all') ? $mail = $params['email'] : $mail = "";
+        (isset($params['idEmpresa']) && ($params['idEmpresa']) != 'all') ? $idEmpresa = $params['idEmpresa'] : $idEmpresa = "";
+
         try
         {
             $con = $this->getConexao();
@@ -22,8 +28,12 @@ class UsuarioDAO extends BaseDAO
             $sql = "SELECT * FROM USUARIOS";
             if (!empty($id))
                 $sql .= " WHERE ID = {$id}";
-            else if (!empty($mail))
+            elseif (!empty($mail))
                 $sql .= " WHERE LOWER(EMAIL) = LOWER('$mail')";
+            elseif (!empty($idEmpresa))
+                $sql .= " WHERE ID_EMPRESA = {$idEmpresa}";
+            varz("select getUsu");
+varz($sql);
             $res = $con->query($sql);
 
             foreach($con->fetchAll($res) as $k => $v) {
@@ -33,43 +43,43 @@ class UsuarioDAO extends BaseDAO
                 $usuario->setEmail($v['EMAIL']);
                 $usuario->setPwd($v['SENHA']);
                 //$usuario->setLogin($v['LOGIN']);
+                $usuario->setIdEmpresa($v['ID_EMPRESA']);
+                $usuario->setIsAtivo(($v['ATIVO']));
+                //varz("rsultado getUsu");
                 $resultados[] = $usuario;
+                varz($resultados);
             }
 
         } catch (\Exception $e) {
             var_dump($e->getMessage());
             die("Erro");
-        } /*finally {
-            $con->close();
-        }*/
+        }
         return $resultados;
     }
 
+    /* Verifica se o e-mail está cadastrado no bd.
+     * Recebe um array de parâmetros.
+     * Retorna um boolean */
     public function isCadastrado($params)
     {
         try
         {
-            $mail = strtolower($params['mailbox'] . '@' . $params['host']);
-            $obj = $this->getUsuarios(null, $mail);
-            //varz($obj);
+            $mail['email'] = strtolower($params['mailbox'] . '@' . $params['host']);
+            $obj = $this->getUsuarios($mail);
 
-            // Se o e-mail já está cadastrado no banco de dados, retorna a ID cadastrada
-            if (!empty($obj)) {
-                return $obj[0]->getId();
-            }
-            // Se não estiver cadastrado, cadastra e retorna a ID cadastrada
-            else {
-                //varzx($params);
-                $this->insertUsuario($params);
-            }
+            if (!empty($obj))
+                return true;
+
+            return false;
         } catch (\Exception $e) {
             var_dump($e->getMessage());
             die("Erro");
-        } /*finally {
-            $con->close();
-        }*/
+        }
     }
 
+    /* Insere um novo usuário no bd.
+     * Recebe um array de parâmetros.
+     * Retorna a ID do contato cadastrado. */
     public function insertUsuario($params) {
 
         try {
@@ -78,15 +88,16 @@ class UsuarioDAO extends BaseDAO
 
             $nome = tirarAcentos($params['personal']);
             $mail = $params['mailbox'] . '@' . $params['host'];
+            $seq = $this->getSequence("USUARIOS", "ID", 1);
 
-            $sql = "INSERT INTO USUARIOS (nome, email) VALUES ('{$nome}', '{$mail}')";
+            $sql = "INSERT INTO USUARIOS (id, nome, email) VALUES ($seq, '{$nome}', '{$mail}')";
             $con->query($sql);
-            $this->isCadastrado($params);
+
+            return $seq;
 
         } catch (\Exception $e) {
             var_dump($e->getMessage());
             die("Erro");
         }
-
     }
 }

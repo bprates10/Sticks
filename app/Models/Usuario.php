@@ -8,7 +8,9 @@ class Usuario
     private $nome;
     private $email;
     private $pwd;
-    private $login;
+    //private $login;
+    private $idEmpresa;
+    private $isAtivo;
 
     /* Getlers e Setlers */
     // ID
@@ -43,30 +45,27 @@ class Usuario
         $this->pwd = $pwd;
     }
 
-    // LOGIN
+    /*// LOGIN
     public function getLogin() {
         return $this->login;
     }
     public function setLogin($login) {
         $this->login = $login;
+    }*/
+
+    // ID_EMPRESA
+    public function getIdEmpresa() {
+        return $this->idEmpresa;
+    }
+    public function setIdEmpresa($idEmpresa) {
+        $this->idEmpresa = $idEmpresa;
     }
 
-
-    /*public function setLogin($login, $senha)
-    {
-        $sql = "SELECT ID, LOGIN FROM USUARIOS WHERE lower(LOGIN) = '{$login}' AND lower(SENHA) = '{$senha}'";
-        //varzx($sql);
-        $query = $this->Conexao->query($sql);
-
-        $fetch = $this->Conexao->fetch($query);
-
-        if ($fetch) {
-            $_SESSION["ID"] = $fetch["ID"];
-            $_SESSION["LOGIN"] = $fetch["LOGIN"];
-
-            return true;
-        }
-
-        return false;
-    }*/
+    // ISATIVO
+    public function getIsAtivo() {
+        return $this->isAtivo;
+    }
+    public function setIsAtivo($isAtivo) {
+        $this->isAtivo = $isAtivo;
+    }
 }

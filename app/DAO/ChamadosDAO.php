@@ -9,6 +9,7 @@
 namespace DAO;
 
 use \Helpers\Conexao;
+use DAO\ChamadosHistoricoDAO;
 
 class ChamadosDAO extends BaseDAO
 {
@@ -46,8 +47,8 @@ class ChamadosDAO extends BaseDAO
                 $arrCondicoes[$i] = "C.ID = {$params['id']}";
                 $i++;
             }
-            if (!empty($params['nome'])) {
-                $arrCondicoes[$i] = "UPPER(U2.NOME) LIKE UPPER('%{$params['nome']}%')";
+            if ($params['idSolicitante'] != 'all') {
+                $arrCondicoes[$i] = "U2.ID = {$params['idSolicitante']}";
                 $i++;
             }
             if (isset($params['email']) && $params['email'] != 'all') {
@@ -68,6 +69,10 @@ class ChamadosDAO extends BaseDAO
             }
             if ($params['prioridade'] != 'all') {
                 $arrCondicoes[$i] = "P.ID = {$params['prioridade']}";
+                $i++;
+            }
+            if ($params['idAtendente'] != 'all') {
+                $arrCondicoes[$i] = "U1.ID = {$params['idAtendente']}";
                 $i++;
             }
 
@@ -94,8 +99,8 @@ class ChamadosDAO extends BaseDAO
                 $chamado->setBody($v['CONTEUDO']);
                 $chamado->setIdStatus($v['STATUS']);
                 $chamado->setIdPriority($v['PRIORIDADE']);
-                $chamado->setIdUser($v['ATENDENTE']);
-                $chamado->setIdSupport($v['CONTATO']);
+                $chamado->setIdUser($v['CONTATO']);
+                $chamado->setIdSupport($v['ATENDENTE']);
                 $chamado->setIdCompany($v['NOMEFANTASIA']);
                 $chamado->setIdPartner($v['EMPRESA_ORIGEM']);
                 $resultados[] = $chamado;
@@ -103,30 +108,36 @@ class ChamadosDAO extends BaseDAO
         } catch (\Exception $e) {
             var_dump($e->getMessage());
             die("Erro");
-        } /*finally {
-            $con->close();
-        }*/
+        }
         //varz($resultados);
         return $resultados;
     }
 
-    public function insertChamados($title, $body, $idDestinatario = "", $idRemetente = "", $priority = 2, $status = 1)
+    public function insertChamados($params = [])
     {
-        $sucesso = false;
-
         try {
             $con = $this->getConexao();
             $con->connect();
+            $next = $this->getSequence("CHAMADOS", "ID", 1);
 
-            $sql = "INSERT INTO CHAMADOS (titulo, conteudo, id_prioridade, id_status, id_contato_chamado, id_atendente) 
-                    VALUES ('{$title}', '{$body}', $idRemetente, $idDestinatario, $priority, $status)";
-            $sucesso = true;
+            $sql = "INSERT INTO CHAMADOS (id, titulo, conteudo, id_prioridade, id_status, id_contato_chamado, id_atendente) 
+                    VALUES ($next, '{$params['title']}', '{$params['body']}', {$params['prioridade']}, {$params['status']}, {$params['idFrom']}, 1)";
+            $con->query($sql);
+
+            try {
+                $params['next'] = $this->getSequence("CHAMADOS", "ID", 0);
+                $params['act'] = 'Aberto via e-mail';
+                $dao = new \DAO\ChamadosHistoricoDAO();
+                $dao->insertHistoricoChamado($params);
+            } catch (\Exception $e) {
+                var_dump($e->getMessage());
+                die("Erro ao inserir histórico");
+            }
+
         } catch (\Exception $e) {
             var_dump($e->getMessage());
             die("Erro");
-        } /*finally {
-            $con->close();
-        }*/
-        return $sucesso;
+        }
+        return true;
     }
 }

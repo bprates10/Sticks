@@ -12,7 +12,7 @@ use \Helpers\Conexao;
 
 class EmpresasDAO extends BaseDAO
 {
-    public function getEmpresas()
+    public function getEmpresas($id = "")
     {
         $resultados = [];
         try
@@ -21,8 +21,8 @@ class EmpresasDAO extends BaseDAO
             $con->connect();
             $sql = "SELECT 	* FROM EMPRESAS";
 
-            //if ($empresa != "")
-                //$sql .= " WHERE ID = {$empresa}";
+            if ($id != "")
+                $sql .= " WHERE ID = {$id}";
 
             $res = $con->query($sql);
             foreach($con->fetchAll($res) as $k => $v) {

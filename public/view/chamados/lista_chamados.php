@@ -22,11 +22,11 @@ $chamadosPrioridades = $chamadosPrioridadeController->getPrioridadeChamados();
 
 // Busca informação dos e-mails
 $usuariosController = new \Controllers\UsuarioController();
-$usuariosEmails = $usuariosController->listagem();
-
+$atendentes = $usuariosController->listagem();
 $lastUpdate = "";
 
 ?>
+<!--link rel="stylesheet" type="text/css" href="mystyle.css"-->
 
 <!-- Início Card Chamados -->
 <div class="content-wrapper">
@@ -359,7 +359,7 @@ $lastUpdate = "";
             <div class="container-fluid">
                 <div class="row">
                     <!-- ID Chamado (Nro) -->
-                    <div class="col-md-3">
+                    <div class="col-md-1">
                         <div class="form-group">
                             <label class="font-normal"> Chamado</label>
                             <input type="text" maxlength="5" id="nro" class="form-control">
@@ -369,7 +369,14 @@ $lastUpdate = "";
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="font-normal"> Solicitante</label>
-                            <input type="text" cols="2" id="nome" class="form-control">
+                            <select id="idSolicitante" cols="2" class="form-control">
+                                <option value="all" selected>Todos</option>
+                                <?php foreach ($atendentes as $atendente) : ?>
+                                    <?php $aux = ""; ($atendente->getIdEmpresa() == 1) ? $aux = " (atendente) " : ""; ?>
+                                        <option value="<?= $atendente->getId(); ?>">
+                                            <?= $atendente->getId() . " - " . $aux . $atendente->getNome(); ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                     </div>
                     <!-- E-mail >
@@ -393,7 +400,7 @@ $lastUpdate = "";
                     </div>
                 </div-->
                     <!-- EMPRESA Origem do chamado -->
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label class="font-normal"> Empresa Origem</label>
                             <select id="origem" cols="2" class="form-control">
@@ -405,7 +412,7 @@ $lastUpdate = "";
                         </div>
                     </div>
                     <!-- EMPRESA Parceira -->
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label class="font-normal"> Empresa Parceira</label>
                             <select id="destino" cols="2" class="form-control">
@@ -446,12 +453,21 @@ $lastUpdate = "";
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="font-normal"> Atendente</label>
-                            <select id="prioridade" cols="2" class="form-control">
+                            <select id="idAtendente" cols="3" class="form-control">
                                 <option value="all" selected>Todos</option>
-                                <?php foreach ($chamadosPrioridades as $prioridade) : ?>
-                                    <option value="<?= $prioridade->getId(); ?>"><?= $prioridade->getId() . " - " . $prioridade->getDescricao(); ?></option>
+                                <?php foreach ($atendentes as $atendente) : ?>
+                                    <?php if ($atendente->getIdEmpresa() == 1) : ; ?>
+                                    <option value="<?= $atendente->getId(); ?>"><?= $atendente->getId() . " - " . $atendente->getNome(); ?></option>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
+                        </div>
+                    </div>
+                    <!-- ASSUNTO -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="font-normal"> Assunto</label>
+                            <input type="text" id="titulo" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -480,6 +496,7 @@ $lastUpdate = "";
             <!--div class="card-footer small text-muted">Atualizado em: < $lastUpdate->format('d-m-Y H:i:s'); ?></div-->
         </div>
         <!-- FIM Datatable de Chamados-->
+        <!--div class="loader" id="load""></div-->
 
     </div>
     <!-- /.container-fluid-->
@@ -526,6 +543,7 @@ $lastUpdate = "";
     <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
     <script src="js/sb-admin-datatables.min.js"></script>
+    <script src="js/bootbox.min.js"></script>
     <!-- MOVIDO LISTA_RELATORIOS.PHP script src="js/sb-admin-charts.min.js"></script-->
 </div>
 <!-- FIM Card Chamados -->
@@ -533,13 +551,18 @@ $lastUpdate = "";
 <script>
     function pesquisarChamado() {
 
-        var id         = ($("#nro").val()).trim();
-        var nome       = ($("#nome").val()).trim();
+        //document.getElementById('#load').style.display = 'block';
+        //document.getElementById('#load').style.display = 'none';
+
+        var id            = ($("#nro").val()).trim();
+        var idSolicitante = ($("#idSolicitante").val()).trim();
         //var email      = ($("#mail").val()).trim();
-        var origem     = ($("#origem").val()).trim();
-        var destino    = ($("#destino").val()).trim();
-        var status     = ($("#status").val()).trim();
-        var prioridade = ($("#prioridade").val()).trim();
+        var origem        = ($("#origem").val()).trim();
+        var destino       = ($("#destino").val()).trim();
+        var status        = ($("#status").val()).trim();
+        var prioridade    = ($("#prioridade").val()).trim();
+        var idAtendente   = ($("#idAtendente").val()).trim();
+        var titulo        = ($("#titulo").val()).trim();
 
         var url = "view/chamados/listagem_chamados.php";
 
@@ -548,12 +571,14 @@ $lastUpdate = "";
             "type": 'POST',
             "data": {
                 id : id,
-                nome: nome,
+                idSolicitante: idSolicitante,
                 //email: email,
                 origem: origem,
                 destino: destino,
                 status: status,
-                prioridade: prioridade
+                prioridade: prioridade,
+                idAtendente: idAtendente,
+                titulo: titulo
             }
         }).done(function (resp) {
             $("#listagem_chamados").html(resp);
@@ -564,14 +589,32 @@ $lastUpdate = "";
 
     function importarChamados() {
 
-        $.ajax({
-            "url" : "../app/Controllers/ChamadosController.php",
-            "type": 'POST',
-            "data": { act: 'importar_chamados'}
-        }).done(function (resp) {
-            alert(resp);
-        }).fail(function (resp) {
-            alert("FAIL");
+        bootbox.confirm({
+            message: "Deseja forçar a leitura de novos chamados ?",
+            buttons: {
+                confirm: {
+                    label: 'Sim',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'Não',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        "url": "../app/Controllers/ChamadosController.php",
+                        "type": 'POST',
+                        "data": {act: 'importar_chamados'}
+                    }).done(function (resp) {
+                        alert(resp);
+                        alert("Chamados inseridos com êxito");
+                    }).fail(function (resp) {
+                        alert("Erro ao importar chamados. Contate o suporte.");
+                    });
+                }
+            }
         });
     }
 </script>

@@ -11,6 +11,7 @@ include_once dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . "app" . 
 // Busca informação dos chamados
 $chamadosController = new \Controllers\ChamadosController();
 $chamados = $chamadosController->getChamados($_POST);
+//varz($chamados);
 $chamados_prioridades = $chamadosController->getPrioridadeChamados();
 $chamados_status = $chamadosController->getStatusChamados();
 
@@ -58,7 +59,7 @@ $id_row = 0;
                         <?php
                         if ($chamado->getIdStatus() == "Resolvido")
                             $cor_linha_chamado = "style='background-color: #32CD32'";
-                        elseif ($chamado->getIdStatus() == "Stand By")
+                        elseif ($chamado->getIdStatus() == "Em Espera")
                             $cor_linha_chamado = "style='background-color: #D3D3D3'";
                         else {
                             $cor_linha_chamado = "";
