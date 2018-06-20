@@ -8,23 +8,18 @@
 
 namespace Controllers;
 
-use DAO\ChamadosDAO;
 use DAO\UsuarioDAO;
-use Helpers\Conexao;
+//use DAO\ChamadosDAO;
+//use Helpers\Conexao;
 use Helpers\ConexaoEmail;
+use DAO\ChamadosHistoricoDAO;
 
-$ctrl = new ChamadosController();
+include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "bootstrap.php";
 
-/*if (isset($_GET['action']) && $_GET['action'] == 'filtra_chamado')
-{
-    $controller = new ChamadosController();
-    return $controller->getStatusChamados($_GET);
-} */
 if (isset($_POST['act']) && $_POST['act'] == 'importar_chamados')
 {
     $controller = new ChamadosController();
-    return $controller->readEmail();
-    //$ctrl->readEmail();
+    return $controller->readEmail($_POST);
 }
 
 class ChamadosController
@@ -47,11 +42,17 @@ class ChamadosController
         return $dao->getPrioridadeChamados();
     }
 
+    /* Efetua a leitura da caixa de e-mail.
+     * Não recebe parâmetro.
+     * Retorna um boolean */
     public function readEmail()
     {
-        $dao = new \DAO\UsuarioDAO();
+        // Id fixa pois configurações da caixa estão no usuário de ID = 4
+        $param['id'] = 1;
 
-        /*$credenciais = $dao->getUsuarios(4);
+        $dao = new UsuarioDAO();
+        // Puxa as informações de e-mail passando como parâmetro a ID 4
+        $credenciais = $dao->getUsuarios($param);
 
         foreach ($credenciais as $v) {
             // Captura credenciais do e-mail
@@ -71,31 +72,37 @@ class ChamadosController
                 for($m = 1; $m <= $mail->contadorEmails($mbox); $m++){
                     $header = imap_headerinfo($mbox, $m);
 
-                    $emailTo = $mail->getToFromEmail($header->to);
-                    //varz($emailTo);
-                    $emailFrom = $mail->getToFromEmail($header->from);
-                    //varz($emailFrom);
-                    $body = utf8_encode($mail->getBody($mbox, $m, 1));
-                    //varzx(utf8_encode($body));
-                    $title = $mail->getTitle($header->subject);
-                    $date = date('d-m-Y H:i:s', strtotime($header->date));
+                    $params['emailTo'] = $mail->getToFromEmail($header->to);
+                    $params['emailFrom'] = $mail->getToFromEmail($header->from);
+                    $params['body'] = utf8_encode($mail->getBody($mbox, $m, 1));
+                    $params['title'] = $mail->getTitle($header->subject);
+                    $params['date'] = date('d-m-Y H:i:s', strtotime($header->date));
 
                     // Trata as informações de remetente e destinatário, cadastrando no banco se necessário. Retorna a ID
                     $dao = new \DAO\UsuarioDAO();
-                    $idTo = $dao->isCadastrado($emailTo);
-                    //varz($idTo);
-                    $idFrom = $dao->isCadastrado($emailFrom);
-                    //varz($idFrom);
+                    if (!$dao->isCadastrado($params['emailFrom']))
+                        $params['id'] = $dao->insertUsuario($params['emailFrom']);
+                    else {
+                        $param['email'] = $params['emailFrom']['mailbox'] . '@' . $params['emailFrom']['host'];
+                        varz("vai abastecer a param[id]");
+                        $params['id'] = $dao->getUsuarios($param);
+                    }
+
+                    $obj = $dao->getUsuarios($params);
+                    varz("valor obj");
+                    varzx($obj);
+                    $params['idFrom'] = $obj[0]->getId();
+
+                    // Prioridade baixa e Status aberto por default
+                    $params['prioridade'] = 1;
+                    $params['status'] = 1;
 
                     // Chama a inserção do chamado
                     $dao = new \DAO\ChamadosDAO();
-                    return $dao->insertChamados($title, $body, $idTo, $idFrom);
-
+                    return $dao->insertChamados($params);
                 }
             }
-            return false;
         }
-        return false;*/
+        return false;
     }
-
 }

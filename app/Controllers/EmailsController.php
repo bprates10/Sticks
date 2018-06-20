@@ -8,21 +8,22 @@
 
 namespace Controllers;
 
-if (isset($_POST['act']) && !empty($_POST['act']))
+use DAO\UsuarioDAO;
+
+/*if (isset($_POST['act']) && !empty($_POST['act']))
 {
     $mail = new EmailsController();
     $acao = strtoupper($_POST['act']);
 
     if ($acao == 'lerEmail')
     {
-        $mail->connMail("imap.gmail.com", "993", "Teste", "bprates10@gmail.com", "charM1520#");
+        $dao = new UsuarioDAO();
+        varzx($dao);
+        $mail->connMail("imap.gmail.com", "993", "Teste", "bprates10@gmail.com", "");
         $count = $mail->countMail("bprates10@gmail.com");
         return $count;
-            //$mailbox, $username, $password, $options = 0, $n_retries = 0, array $params = null
     }
-
-
-}
+}*/
 
 
 class EmailsController
