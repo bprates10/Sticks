@@ -136,7 +136,7 @@ class ChamadosDAO extends BaseDAO
 
         } catch (\Exception $e) {
             var_dump($e->getMessage());
-            die("Erro");
+            return false;
         }
         return true;
     }

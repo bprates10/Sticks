@@ -11,7 +11,6 @@ include_once dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . "app" . 
 // Busca informação dos chamados
 $chamadosController = new \Controllers\ChamadosController();
 $chamados = $chamadosController->getChamados($_POST);
-//varz($chamados);
 $chamados_prioridades = $chamadosController->getPrioridadeChamados();
 $chamados_status = $chamadosController->getStatusChamados();
 

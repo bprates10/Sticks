@@ -11,11 +11,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="308" column="40" lean-forward="true" selection-start-line="308" selection-start-column="12" selection-end-line="308" selection-end-column="40" />
+            <state relative-caret-position="986">
+              <caret line="308" column="40" lean-forward="false" selection-start-line="308" selection-start-column="12" selection-end-line="308" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -24,9 +24,12 @@
       <file leaf-file-name="lista_chamados.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/view/chamados/lista_chamados.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="567" column="0" lean-forward="true" selection-start-line="567" selection-start-column="0" selection-end-line="567" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="2107">
+              <caret line="551" column="32" lean-forward="false" selection-start-line="551" selection-start-column="32" selection-end-line="551" selection-end-column="32" />
+              <folding>
+                <element signature="e#26902#28203#0#HTML" expanded="false" />
+                <element signature="e#28237#29240#0#HTML" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -34,66 +37,18 @@
       <file leaf-file-name="listagem_chamados.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/view/chamados/listagem_chamados.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1176">
-              <caret line="61" column="69" lean-forward="false" selection-start-line="61" selection-start-column="69" selection-end-line="61" selection-end-column="69" />
+            <state relative-caret-position="147">
+              <caret line="12" column="53" lean-forward="false" selection-start-line="12" selection-start-column="53" selection-end-line="12" selection-end-column="53" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChamadosDAO.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/DAO/ChamadosDAO.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="115" column="26" lean-forward="false" selection-start-line="115" selection-start-column="26" selection-end-line="115" selection-end-column="26" />
-              <folding>
-                <element signature="e#105#126#0#PHP" expanded="true" />
-                <element signature="e#198#3993#0#PHP" expanded="false" />
-                <element signature="e#1440#1566#0#PHP" expanded="false" />
-                <element signature="e#1742#1927#0#PHP" expanded="false" />
-                <element signature="e#2089#2227#0#PHP" expanded="false" />
-                <element signature="e#2240#2375#0#PHP" expanded="false" />
-                <element signature="e#2388#2531#0#PHP" expanded="false" />
-                <element signature="e#2743#3096#0#PHP" expanded="false" />
-                <marker date="1528581793959" expanded="true" signature="4215:4348" ph="INSERT INTO CHAMADOS... " />
-                <marker date="1528581793959" expanded="true" signature="4215:4356" ph="INSERT INTO CHAMADOS... " />
-                <marker date="1528581793959" expanded="true" signature="4215:4375" ph="INSERT INTO CHAMADOS... " />
-                <marker date="1528581793959" expanded="true" signature="4215:4377" ph="INSERT INTO CHAMADOS... " />
-                <marker date="1528581793959" expanded="true" signature="4215:4378" ph="INSERT INTO CHAMADOS... " />
-                <marker date="1528581793959" expanded="true" signature="4215:4398" ph="INSERT INTO CHAMADOS... " />
-                <marker date="1528581793959" expanded="true" signature="4215:4422" ph="INSERT INTO CHAMADOS... " />
-                <marker date="1528581793959" expanded="true" signature="4215:4444" ph="INSERT INTO CHAMADOS... " />
-                <marker date="1528581793959" expanded="true" signature="4215:4463" ph="INSERT INTO CHAMADOS... " />
-                <marker date="1528581793959" expanded="true" signature="4215:4465" ph="INSERT INTO CHAMADOS... " />
-                <marker date="1528581793959" expanded="true" signature="4215:4466" ph="INSERT INTO CHAMADOS... " />
-                <marker date="1528581793959" expanded="true" signature="4215:4467" ph="INSERT INTO CHAMADOS... " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChamadosHistoricoDAO.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/DAO/ChamadosHistoricoDAO.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="17" column="29" lean-forward="false" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
-              <folding>
-                <marker date="1528581578881" expanded="true" signature="369:408" ph="INSERT INTO CHAMADOS... " />
-                <marker date="1528581578881" expanded="true" signature="369:417" ph="INSERT INTO CHAMADOS... " />
-                <marker date="1528581578881" expanded="true" signature="369:422" ph="INSERT INTO CHAMADOS... " />
-                <marker date="1528581578881" expanded="true" signature="369:429" ph="INSERT INTO CHAMADOS_HISTORICO... " />
-                <marker date="1528581578881" expanded="true" signature="369:447" ph="INSERT INTO CHAMADOS_HISTORICO... " />
-                <marker date="1528581578881" expanded="true" signature="369:495" ph="INSERT INTO " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChamadosController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ChamadosController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Controllers/ChamadosController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1512">
-              <caret line="87" column="64" lean-forward="false" selection-start-line="87" selection-start-column="64" selection-end-line="87" selection-end-column="64" />
+            <state relative-caret-position="532">
+              <caret line="97" column="33" lean-forward="true" selection-start-line="97" selection-start-column="27" selection-end-line="97" selection-end-column="33" />
               <folding>
                 <element signature="e#113#132#0#PHP" expanded="true" />
                 <element signature="e#638#789#0#PHP" expanded="false" />
@@ -104,35 +59,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConexaoEmail.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Helpers/ConexaoEmail.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="819">
-              <caret line="62" column="47" lean-forward="false" selection-start-line="61" selection-start-column="12" selection-end-line="62" selection-end-column="47" />
-              <folding>
-                <element signature="e#380#441#0#PHP" expanded="false" />
-                <element signature="e#446#513#0#PHP" expanded="false" />
-                <element signature="e#519#586#0#PHP" expanded="false" />
-                <element signature="e#591#670#0#PHP" expanded="false" />
-                <element signature="e#676#739#0#PHP" expanded="false" />
-                <element signature="e#744#815#0#PHP" expanded="false" />
-                <element signature="e#840#1070#0#PHP" expanded="false" />
-                <element signature="e#1076#1157#0#PHP" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="UsuarioDAO.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/DAO/UsuarioDAO.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-230">
-              <caret line="32" column="16" lean-forward="false" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
+            <state relative-caret-position="609">
+              <caret line="34" column="21" lean-forward="false" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
               <folding>
-                <element signature="e#1861#1974#0#PHP" expanded="false" />
-                <element signature="e#1979#2377#0#PHP" expanded="false" />
-                <marker date="1528586088828" expanded="true" signature="740:762" ph="SELECT * FRO... USUARIOS" />
-                <marker date="1528586088828" expanded="true" signature="2830:2904" ph="INSERT INTO USUARIOS... " />
+                <element signature="e#1721#1834#0#PHP" expanded="false" />
+                <element signature="e#2243#2359#0#PHP" expanded="false" />
+                <marker date="1530065252818" expanded="true" signature="700:722" ph="SELECT * FRO... USUARIOS" />
+                <marker date="1530065252818" expanded="true" signature="2690:2764" ph="INSERT INTO USUARIOS... " />
               </folding>
             </state>
           </provider>
@@ -190,14 +126,14 @@
         <option value="$PROJECT_DIR$/public/view/chamados/lista_chamados.php" />
         <option value="$PROJECT_DIR$/public/view/chamados/lista_chamados.php" />
         <option value="$PROJECT_DIR$/app/Models/ChamadosHistorico.php" />
-        <option value="$PROJECT_DIR$/public/view/chamados/listagem_chamados.php" />
         <option value="$PROJECT_DIR$/app/DAO/BaseDAO.php" />
+        <option value="$PROJECT_DIR$/public/index.php" />
+        <option value="$PROJECT_DIR$/public/index.php" />
         <option value="$PROJECT_DIR$/app/DAO/ChamadosHistoricoDAO.php" />
         <option value="$PROJECT_DIR$/app/DAO/ChamadosDAO.php" />
+        <option value="$PROJECT_DIR$/public/view/chamados/listagem_chamados.php" />
         <option value="$PROJECT_DIR$/app/Controllers/ChamadosController.php" />
         <option value="$PROJECT_DIR$/app/DAO/UsuarioDAO.php" />
-        <option value="$PROJECT_DIR$/public/index.php" />
-        <option value="$PROJECT_DIR$/public/index.php" />
       </list>
     </option>
   </component>
@@ -230,6 +166,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -282,8 +220,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -338,11 +274,13 @@
       <workItem from="1527893591187" duration="63430000" />
       <workItem from="1528201960402" duration="40907000" />
       <workItem from="1528768100478" duration="1612000" />
+      <workItem from="1529492438146" duration="892000" />
+      <workItem from="1530060445401" duration="4904000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="176412000" />
+    <option name="totallyTimeSpent" value="182208000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -351,7 +289,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18489583" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23867403" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23867403" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -543,7 +481,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -565,21 +502,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="819">
           <caret line="67" column="42" lean-forward="false" selection-start-line="67" selection-start-column="42" selection-end-line="67" selection-end-column="42" />
-          <folding>
-            <element signature="e#227#284#0#PHP" expanded="false" />
-            <element signature="e#289#348#0#PHP" expanded="false" />
-            <element signature="e#366#427#0#PHP" expanded="false" />
-            <element signature="e#432#499#0#PHP" expanded="false" />
-            <element signature="e#518#581#0#PHP" expanded="false" />
-            <element signature="e#586#657#0#PHP" expanded="false" />
-            <element signature="e#676#735#0#PHP" expanded="false" />
-            <element signature="e#740#803#0#PHP" expanded="false" />
-            <element signature="e#809#965#0#PHP" expanded="false" />
-            <element signature="e#989#1060#0#PHP" expanded="false" />
-            <element signature="e#1065#1152#0#PHP" expanded="false" />
-            <element signature="e#1173#1240#0#PHP" expanded="false" />
-            <element signature="e#1245#1324#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -594,7 +516,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="15" column="31" lean-forward="true" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -644,9 +565,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="15" column="24" lean-forward="false" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
-          <folding>
-            <element signature="e#113#132#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -656,7 +574,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="626">
           <caret line="57" column="13" lean-forward="false" selection-start-line="57" selection-start-column="13" selection-end-line="57" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -674,21 +591,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/view/chamados/listagem_chamados.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1176">
-          <caret line="61" column="69" lean-forward="false" selection-start-line="61" selection-start-column="69" selection-end-line="61" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/DAO/BaseDAO.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
           <caret line="36" column="70" lean-forward="false" selection-start-line="36" selection-start-column="70" selection-end-line="36" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Helpers/ConexaoEmail.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="45" column="20" lean-forward="false" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
           <folding>
-            <element signature="e#134#545#0#PHP" expanded="false" />
-            <marker date="1528581173219" expanded="true" signature="884:930" ph="SELECT MAX(I... CHAMADOS" />
+            <element signature="e#380#441#0#PHP" expanded="false" />
+            <element signature="e#446#513#0#PHP" expanded="false" />
+            <element signature="e#519#586#0#PHP" expanded="false" />
+            <element signature="e#591#670#0#PHP" expanded="false" />
+            <element signature="e#676#739#0#PHP" expanded="false" />
+            <element signature="e#744#815#0#PHP" expanded="false" />
+            <element signature="e#1076#1157#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -696,22 +617,22 @@
     <entry file="file://$PROJECT_DIR$/app/DAO/ChamadosHistoricoDAO.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
-          <caret line="17" column="29" lean-forward="false" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+          <caret line="17" column="20" lean-forward="false" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
           <folding>
-            <marker date="1528581578881" expanded="true" signature="369:408" ph="INSERT INTO CHAMADOS... " />
-            <marker date="1528581578881" expanded="true" signature="369:417" ph="INSERT INTO CHAMADOS... " />
-            <marker date="1528581578881" expanded="true" signature="369:422" ph="INSERT INTO CHAMADOS... " />
-            <marker date="1528581578881" expanded="true" signature="369:429" ph="INSERT INTO CHAMADOS_HISTORICO... " />
-            <marker date="1528581578881" expanded="true" signature="369:447" ph="INSERT INTO CHAMADOS_HISTORICO... " />
-            <marker date="1528581578881" expanded="true" signature="369:495" ph="INSERT INTO " />
+            <marker date="1530063277176" expanded="true" signature="369:408" ph="INSERT INTO CHAMADOS... " />
+            <marker date="1530063277176" expanded="true" signature="369:417" ph="INSERT INTO CHAMADOS... " />
+            <marker date="1530063277176" expanded="true" signature="369:422" ph="INSERT INTO CHAMADOS... " />
+            <marker date="1530063277176" expanded="true" signature="369:429" ph="INSERT INTO CHAMADOS_HISTORICO... " />
+            <marker date="1530063277176" expanded="true" signature="369:447" ph="INSERT INTO CHAMADOS_HISTORICO... " />
+            <marker date="1530063277176" expanded="true" signature="369:495" ph="INSERT INTO " />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/DAO/ChamadosDAO.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="115" column="26" lean-forward="false" selection-start-line="115" selection-start-column="26" selection-end-line="115" selection-end-column="26" />
+        <state relative-caret-position="175">
+          <caret line="116" column="5" lean-forward="false" selection-start-line="116" selection-start-column="5" selection-end-line="116" selection-end-column="5" />
           <folding>
             <element signature="e#105#126#0#PHP" expanded="true" />
             <element signature="e#198#3993#0#PHP" expanded="false" />
@@ -721,78 +642,72 @@
             <element signature="e#2240#2375#0#PHP" expanded="false" />
             <element signature="e#2388#2531#0#PHP" expanded="false" />
             <element signature="e#2743#3096#0#PHP" expanded="false" />
-            <marker date="1528581793959" expanded="true" signature="4215:4348" ph="INSERT INTO CHAMADOS... " />
-            <marker date="1528581793959" expanded="true" signature="4215:4356" ph="INSERT INTO CHAMADOS... " />
-            <marker date="1528581793959" expanded="true" signature="4215:4375" ph="INSERT INTO CHAMADOS... " />
-            <marker date="1528581793959" expanded="true" signature="4215:4377" ph="INSERT INTO CHAMADOS... " />
-            <marker date="1528581793959" expanded="true" signature="4215:4378" ph="INSERT INTO CHAMADOS... " />
-            <marker date="1528581793959" expanded="true" signature="4215:4398" ph="INSERT INTO CHAMADOS... " />
-            <marker date="1528581793959" expanded="true" signature="4215:4422" ph="INSERT INTO CHAMADOS... " />
-            <marker date="1528581793959" expanded="true" signature="4215:4444" ph="INSERT INTO CHAMADOS... " />
-            <marker date="1528581793959" expanded="true" signature="4215:4463" ph="INSERT INTO CHAMADOS... " />
-            <marker date="1528581793959" expanded="true" signature="4215:4465" ph="INSERT INTO CHAMADOS... " />
-            <marker date="1528581793959" expanded="true" signature="4215:4466" ph="INSERT INTO CHAMADOS... " />
-            <marker date="1528581793959" expanded="true" signature="4215:4467" ph="INSERT INTO CHAMADOS... " />
+            <marker date="1530063499022" expanded="true" signature="4215:4348" ph="INSERT INTO CHAMADOS... " />
+            <marker date="1530063499022" expanded="true" signature="4215:4356" ph="INSERT INTO CHAMADOS... " />
+            <marker date="1530063499022" expanded="true" signature="4215:4375" ph="INSERT INTO CHAMADOS... " />
+            <marker date="1530063499022" expanded="true" signature="4215:4377" ph="INSERT INTO CHAMADOS... " />
+            <marker date="1530063499022" expanded="true" signature="4215:4378" ph="INSERT INTO CHAMADOS... " />
+            <marker date="1530063499022" expanded="true" signature="4215:4398" ph="INSERT INTO CHAMADOS... " />
+            <marker date="1530063499022" expanded="true" signature="4215:4422" ph="INSERT INTO CHAMADOS... " />
+            <marker date="1530063499022" expanded="true" signature="4215:4444" ph="INSERT INTO CHAMADOS... " />
+            <marker date="1530063499022" expanded="true" signature="4215:4463" ph="INSERT INTO CHAMADOS... " />
+            <marker date="1530063499022" expanded="true" signature="4215:4465" ph="INSERT INTO CHAMADOS... " />
+            <marker date="1530063499022" expanded="true" signature="4215:4466" ph="INSERT INTO CHAMADOS... " />
+            <marker date="1530063499022" expanded="true" signature="4215:4467" ph="INSERT INTO CHAMADOS... " />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Helpers/ConexaoEmail.php">
+    <entry file="file://$PROJECT_DIR$/public/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="819">
-          <caret line="62" column="47" lean-forward="false" selection-start-line="61" selection-start-column="12" selection-end-line="62" selection-end-column="47" />
+        <state relative-caret-position="986">
+          <caret line="308" column="40" lean-forward="false" selection-start-line="308" selection-start-column="12" selection-end-line="308" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/view/chamados/lista_chamados.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2107">
+          <caret line="551" column="32" lean-forward="false" selection-start-line="551" selection-start-column="32" selection-end-line="551" selection-end-column="32" />
           <folding>
-            <element signature="e#380#441#0#PHP" expanded="false" />
-            <element signature="e#446#513#0#PHP" expanded="false" />
-            <element signature="e#519#586#0#PHP" expanded="false" />
-            <element signature="e#591#670#0#PHP" expanded="false" />
-            <element signature="e#676#739#0#PHP" expanded="false" />
-            <element signature="e#744#815#0#PHP" expanded="false" />
-            <element signature="e#840#1070#0#PHP" expanded="false" />
-            <element signature="e#1076#1157#0#PHP" expanded="false" />
+            <element signature="e#26902#28203#0#HTML" expanded="false" />
+            <element signature="e#28237#29240#0#HTML" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/view/chamados/listagem_chamados.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="12" column="53" lean-forward="false" selection-start-line="12" selection-start-column="53" selection-end-line="12" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/DAO/UsuarioDAO.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="34" column="21" lean-forward="false" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
+          <folding>
+            <element signature="e#1721#1834#0#PHP" expanded="false" />
+            <element signature="e#2243#2359#0#PHP" expanded="false" />
+            <marker date="1530065252818" expanded="true" signature="700:722" ph="SELECT * FRO... USUARIOS" />
+            <marker date="1530065252818" expanded="true" signature="2690:2764" ph="INSERT INTO USUARIOS... " />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Controllers/ChamadosController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1512">
-          <caret line="87" column="64" lean-forward="false" selection-start-line="87" selection-start-column="64" selection-end-line="87" selection-end-column="64" />
+        <state relative-caret-position="532">
+          <caret line="97" column="33" lean-forward="true" selection-start-line="97" selection-start-column="27" selection-end-line="97" selection-end-column="33" />
           <folding>
             <element signature="e#113#132#0#PHP" expanded="true" />
             <element signature="e#638#789#0#PHP" expanded="false" />
             <element signature="e#795#941#0#PHP" expanded="false" />
             <element signature="e#947#1044#0#PHP" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/DAO/UsuarioDAO.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-230">
-          <caret line="32" column="16" lean-forward="false" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
-          <folding>
-            <element signature="e#1861#1974#0#PHP" expanded="false" />
-            <element signature="e#1979#2377#0#PHP" expanded="false" />
-            <marker date="1528586088828" expanded="true" signature="740:762" ph="SELECT * FRO... USUARIOS" />
-            <marker date="1528586088828" expanded="true" signature="2830:2904" ph="INSERT INTO USUARIOS... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/view/chamados/lista_chamados.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="567" column="0" lean-forward="true" selection-start-line="567" selection-start-column="0" selection-end-line="567" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="308" column="40" lean-forward="true" selection-start-line="308" selection-start-column="12" selection-end-line="308" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>

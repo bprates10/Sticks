@@ -47,60 +47,69 @@ class ChamadosController
      * Retorna um boolean */
     public function readEmail()
     {
-        // Id fixa pois configurações da caixa estão no usuário de ID = 4
+        // Inicia a captura das informações do e-mail
+        // Id fixa pois configurações da caixa estão no usuário de ID = 1
         $param['id'] = 1;
-
+        // Instancia novo usuário
         $dao = new UsuarioDAO();
-        // Puxa as informações de e-mail passando como parâmetro a ID 4
+        // Puxa as informações de e-mail passando como parâmetro a ID 1
         $credenciais = $dao->getUsuarios($param);
 
-        foreach ($credenciais as $v) {
-            // Captura credenciais do e-mail
-            $params['host'] = "imap.gmail.com";
-            $params['usuario'] = $v->getEmail();
-            $params['senha'] = $v->getPwd();
+        //foreach ($credenciais as $v) {
+        // Captura credenciais do e-mail
+        $params['host']    = "imap.gmail.com";
+        $params['usuario'] = $credenciais[0]->getEmail();
+        $params['senha']   = $credenciais[0]->getPwd();
 
-            // Instancia a classe de conexão de e-mail
-            $mail = new ConexaoEmail($params);
-            // Conecta ao e-mail
-            $mbox = $mail->conectar();
+        // Instancia a classe de conexão de e-mail
+        $mail = new ConexaoEmail($params);
+        // Reseta parâmetros
+        unset($params, $param);
 
-            // Se existir conexão, procede com a leitura de e-mails
-            if ($mbox)
-            {
-                // Contabiliza os e-mails da caixa e percorre cada um no laço
-                for($m = 1; $m <= $mail->contadorEmails($mbox); $m++){
-                    $header = imap_headerinfo($mbox, $m);
+        // Conecta ao e-mail
+        $mbox = $mail->conectar();
 
-                    $params['emailTo'] = $mail->getToFromEmail($header->to);
-                    $params['emailFrom'] = $mail->getToFromEmail($header->from);
-                    $params['body'] = utf8_encode($mail->getBody($mbox, $m, 1));
-                    $params['title'] = $mail->getTitle($header->subject);
-                    $params['date'] = date('d-m-Y H:i:s', strtotime($header->date));
+        // Se existir conexão, procede com a leitura de e-mails
+        if ($mbox)
+        {
+            // Contabiliza os e-mails da caixa e percorre cada um no laço
+            for($m = 1; $m <= $mail->contadorEmails($mbox); $m++){
+                $header = imap_headerinfo($mbox, $m);
 
-                    // Trata as informações de remetente e destinatário, cadastrando no banco se necessário. Retorna a ID
-                    $dao = new \DAO\UsuarioDAO();
-                    if (!$dao->isCadastrado($params['emailFrom']))
-                        $params['id'] = $dao->insertUsuario($params['emailFrom']);
-                    else {
-                        $param['email'] = $params['emailFrom']['mailbox'] . '@' . $params['emailFrom']['host'];
-                        varz("vai abastecer a param[id]");
-                        $params['id'] = $dao->getUsuarios($param);
-                    }
+                // Destinatário
+                $params['emailTo'] = $mail->getToFromEmail($header->to);
+                // Remetente
+                $params['emailFrom'] = $mail->getToFromEmail($header->from);
+                // Corpo do e-mail
+                $params['body'] = utf8_encode($mail->getBody($mbox, $m, 1));
+                // Assunto do e-mail
+                $params['title'] = $mail->getTitle($header->subject);
+                // Data do e-mail
+                $params['date'] = date('d-m-Y H:i:s', strtotime($header->date));
 
-                    $obj = $dao->getUsuarios($params);
-                    varz("valor obj");
-                    varzx($obj);
-                    $params['idFrom'] = $obj[0]->getId();
+                // Trata as informações de remetente e destinatário, cadastrando no banco se necessário. Retorna a ID
+                $dao = new \DAO\UsuarioDAO();
 
-                    // Prioridade baixa e Status aberto por default
-                    $params['prioridade'] = 1;
-                    $params['status'] = 1;
-
-                    // Chama a inserção do chamado
-                    $dao = new \DAO\ChamadosDAO();
-                    return $dao->insertChamados($params);
+                // Verifica se o remetente está cadastrado. Caso não esteja, cadastra.
+                if (!$dao->isCadastrado($params['emailFrom']))
+                    $params['id'] = $dao->insertUsuario($params['emailFrom']);
+                else {
+                    $param['email'] = $params['emailFrom']['mailbox'] . '@' . $params['emailFrom']['host'];
+                    $params['id'] = $dao->getUsuarios($param);
                 }
+
+                $obj = $dao->getUsuarios($params);
+                varzx($params);
+                $params['idFrom'] = $obj[0]->getId();
+
+                // Prioridade baixa e Status aberto por default
+                $params['prioridade'] = 1;
+                $params['status'] = 1;
+
+                // Chama a inserção do chamado
+                $dao = new \DAO\ChamadosDAO();
+
+                return $dao->insertChamados($params);
             }
         }
         return false;
