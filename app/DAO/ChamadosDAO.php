@@ -43,11 +43,11 @@ class ChamadosDAO extends BaseDAO
             $arrCondicoes = [];
             $i = 0;
 
-            if (!empty($params['id'])) {
+            if (isset($params['id']) && !empty($params['id'])) {
                 $arrCondicoes[$i] = "C.ID = {$params['id']}";
                 $i++;
             }
-            if ($params['idSolicitante'] != 'all') {
+            if (isset($params['idSolicitante']) && $params['idSolicitante'] != 'all') {
                 $arrCondicoes[$i] = "U2.ID = {$params['idSolicitante']}";
                 $i++;
             }
@@ -55,23 +55,23 @@ class ChamadosDAO extends BaseDAO
                 $arrCondicoes[$i] = "UPPER(U2.EMAIL) LIKE UPPER('%{$params['email']}%')";
                 $i++;
             }
-            if ($params['origem'] != 'all') {
+            if (isset($params['origem']) && $params['origem'] != 'all') {
                 $arrCondicoes[$i] = "E1.ID = {$params['origem']}";
                 $i++;
             }
-            if ($params['destino'] != 'all') {
+            if (isset($params['destino']) && $params['destino'] != 'all') {
                 $arrCondicoes[$i] = "E2.ID = {$params['destino']}";
                 $i++;
             }
-            if ($params['status'] != 'all') {
+            if (isset($params['status']) && $params['status'] != 'all') {
                 $arrCondicoes[$i] = "S.ID = {$params['status']}";
                 $i++;
             }
-            if ($params['prioridade'] != 'all') {
+            if (isset($params['prioridade']) && $params['prioridade'] != 'all') {
                 $arrCondicoes[$i] = "P.ID = {$params['prioridade']}";
                 $i++;
             }
-            if ($params['idAtendente'] != 'all') {
+            if (isset($params['idAtendente']) && $params['idAtendente'] != 'all') {
                 $arrCondicoes[$i] = "U1.ID = {$params['idAtendente']}";
                 $i++;
             }
@@ -109,8 +109,31 @@ class ChamadosDAO extends BaseDAO
             var_dump($e->getMessage());
             die("Erro");
         }
-        //varz($resultados);
         return $resultados;
+    }
+
+    public function getChamadosPorEmpresa()
+    {
+        $con = $this->getConexao();
+        $con->connect();
+
+        $sql = "SELECT e1.NOMEFANTASIA AS ORIGEM,
+                       (SELECT COUNT(cc.ID_EMPRESA_CHAMADO) FROM CHAMADOS cc WHERE cc.ID_EMPRESA_CHAMADO = e1.ID) AS CONTORIGEM,
+                       e2.NOMEFANTASIA AS PARCEIRA,
+                       (SELECT COUNT(cc.ID_EMPRESA_PARCEIRA) FROM CHAMADOS cc WHERE cc.ID_EMPRESA_PARCEIRA = e2.ID) AS CONTPARCEIRA
+                FROM CHAMADOS c
+                LEFT JOIN EMPRESAS e1 ON e1.ID = c.ID_EMPRESA_CHAMADO
+                LEFT JOIN EMPRESAS e2 ON e2.ID = c.ID_EMPRESA_PARCEIRA";
+        $query = $con->query($sql);
+        $res = $con->fetchAll($query);
+
+        $resultado = [];
+        if ($res) {
+            foreach ($res as $k=>$v){
+                $resultado[$k] = $v;
+            }
+        }
+        return $resultado;
     }
 
     public function insertChamados($params = [])
@@ -139,5 +162,36 @@ class ChamadosDAO extends BaseDAO
             return false;
         }
         return true;
+    }
+
+    public function getDadosGraficos()
+    {
+        try
+        {
+            $con = $this->getConexao();
+            $con->connect();
+
+            $sql = "SELECT DISTINCT c.ID_STATUS,
+				                    count(c.ID_STATUS) AS COUNT_STAT,
+				                    c.id_prioridade,
+				                    count(c.id_prioridade) AS COUNT_PRIO
+                    FROM chamados c
+                    GROUP BY c.ID_STATUS, c.id_prioridade";
+
+            $query = $con->query($sql);
+
+            $resultado = [];
+
+            if ($query)
+            {
+                while($chamados = $con->fetchAll($query))
+                {
+                    varz($chamados);
+                }
+            }
+
+        } catch (\Exception $e) {
+            var_dump($e->getMessage());
+        }
     }
 }

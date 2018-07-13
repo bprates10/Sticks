@@ -11,10 +11,10 @@ namespace Controllers;
 
 class EmpresasController
 {
-    public function buscaEmpresas ($id = "")
+    public function buscaEmpresas ($id = "", $ativo = "")
     {
         $dao = new \DAO\EmpresasDAO();
-        return $dao->getEmpresas($id);
+        return $dao->getEmpresas($id, $ativo);
     }
 
 }

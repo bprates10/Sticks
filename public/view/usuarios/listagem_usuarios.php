@@ -2,145 +2,86 @@
 /**
  * Created by PhpStorm.
  * User: bprat
- * Date: 24/01/2018
- * Time: 12:54
+ * Date: 03/06/2018
+ * Time: 18:18
  */
 
-include_once "../../model/UsuarioController.php";
+include_once dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR . "app" . DIRECTORY_SEPARATOR . "bootstrap.php";
 
-$Controller = new UsuarioController();
+// Busca informação dos usuarios
+$usuarioController = new \Controllers\UsuarioController();
+$usuarios = $usuarioController->listagem($_POST);
+
+$empresaController = new \Controllers\EmpresasController();
+
+$cor_coluna_prioridade = "";
+$id_row = 0;
 
 ?>
 
-<div class="content-fluid" id="listagem_maior">
-    <!-- Title -->
-    <div class="container-fluid">
-        <div class="row">
-            <div class="header">
-                <h2>Usuários</h2>
-            </div>
+<div class="card mb-3">
+    <!-- Sub Título -->
+    <div class="card-header">
+        <i class="fa fa-table"></i> Usuários Cadastrados:</div>
+    <!-- Início Datatable Usuários -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th><i class="fa fa-bug"> ID</th>
+                    <th><i class="fa fa-child"> Nome</th>
+                    <th><i class="envelope-o"></i> E-mail</th>
+                    <th><i class="fa fa-handshake-o"> Empresa</th>
+                    <th><i class="fa fa-bolt"></i> Ativo</th>
+                    <th><i class="fa fa-cog"></i> Ação</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th><i class="fa fa-bug"> ID</th>
+                    <th><i class="fa fa-child"> Nome</th>
+                    <th><i class="envelope-o"></i> E-mail</th>
+                    <th><i class="fa fa-handshake-o"> Empresa</th>
+                    <th><i class="fa fa-bolt"></i> Ativo</th>
+                    <th><i class="fa fa-cog"></i> Ação</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                <?php if (!empty($usuarios)) : ?>
+                    <?php foreach ($usuarios as $usuario) : ?>
+                        <!-- Tratamento da cor para contato inativo -->
+                        <?php $cor_linha_usuario = ""; ?>
+                        <?php ($usuario->getIsAtivo() == "N") ? $cor_linha_usuario = "style='color: #FF6347'" : "style='color: '"; ?>
+                        <tr>
+                            <td <?= $cor_linha_usuario ?>><?= $usuario->getId(); ?></td>
+                            <td <?= $cor_linha_usuario ?>><?= $usuario->getNome(); ?></td>
+                            <td <?= $cor_linha_usuario ?>><?= $usuario->getEmail(); ?></td>
+                            <!-- Tratamento para pegar o nomefantasia da emmpresa -->
+                            <?php
+                            if (!empty($usuario->getIdEmpresa())) {
+                                $empresa = $empresaController->buscaEmpresas($usuario->getIdEmpresa());
+                                $empresa = $empresa[0];
+                                $empresa = $empresa->getNomeFantasia();
+                            } else { $empresa = "<b> Não Cadastrada </b>"; }
+                            ?>
+                            <td <?= $cor_linha_usuario ?>><?= $empresa; ?></td>
+                            <!-- FIM Tratamento para pegar o nomefantasia da emmpresa -->
+                            <td <?= $cor_linha_usuario ?>><b><?= $usuario->getIsAtivo(); ?></b></td>
+                            <td>
+                            <i id="icon_edit_<?= $id_row; ?>" data-toggle="tooltip" title="Editar" class="fa fa-edit" onclick="editar_campos(<?= $id_row; ?>);">
+                            <i id="icon_view_<?= $id_row; ?>" data-toggle="tooltip" title="Ver Histórico" class="fa fa-address-book-o" onclick="alert('Implementar histórico do usuário');">
+                            <i id="icon_inative_<?= $id_row; ?>" data-toggle="tooltip" title="Inativar Contato" class="fa fa-close" onclick="alert('Implementar inativação do usuário');">
+                            <i id="icon_active_<?= $id_row; ?>" data-toggle="tooltip" title="Ativar Contato" class="fa fa-check" onclick="alert('Implementar ativação do usuário');">
+                            </td>
+                        </tr>
+                        <?php $id_row++ ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                </tbody>
+                </tbody>
+            </table>
         </div>
     </div>
-    <!-- FIM Title -->
-
-    <!-- Campos de Pesquisa -->
-    <div class="container-fluid">
-        <div class="row">
-            <!-- NOME -->
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label class="font-normal">Nome do Usuário</label>
-                    <input type="text" cols="3" id="name" class="form-control">
-                </div>
-            </div>
-            <!-- EMAIL -->
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label class="font-normal">E-mail</label>
-                    <input type="text" cols="3" id="mail" class="form-control">
-                </div>
-            </div>
-            <!-- LOGIN -->
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label class="font-normal">Login</label>
-                    <input type="text" cols="3" id="login" class="form-control">
-                </div>
-            </div>
-            <!-- ATIVO -->
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label class="font-normal">Usuários Ativos</label>
-                    <select id="ativo" cols="2" class="form-control">
-                        <option value="null" selected>Ambos</option>
-                        <option value="S">Ativos</option>
-                        <option value="N">Inativos</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- FIM Campos de Pesquisa -->
-
-    <!-- Botões -->
-    <div class="container-fluid">
-        <div class="row">
-            <button type="button" class="btn btn-success btn-fill pull-right" style="margin-right: 15px" onclick="cadastrar();">
-                <i class="fa fa-plus-square"></i>Novo</button>
-            <button type="button" class="btn btn-secondary btn-fill pull-right"  style="margin-right: 5px" onclick="findUser();">
-                <i class="fa fa-search"></i>Pesquisar</button>
-        </div>
-    </div>
-    <!-- FIM Botões -->
-
-    <div class="container-fluid">
-        <div class="row">
-            <h4></h4>
-        </div>
-    </div>
-
-    <!-- Início Listagem Usuários -->
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-
-                <!-- Div onde tudo acontece -->
-                <div id="listagem" class="card">
-
-                </div>
-                <!-- FIM Div onde tudo acontece -->
-
-            </div>
-        </div>
-    </div>
+    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
 </div>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script>
-    function findUser() {
-
-        arrUsr = {
-            action: "findUser",
-            name:   $("#name").val(),
-            mail:   $("#mail").val(),
-            login:  $("#login").val(),
-            active: $("#ativo").val()
-        };
-
-        $_POST = arrUsr;
-
-        var url = "usuarios/lista_usuarios.php";
-        
-        $.ajax({
-            "url": url,
-            "type": 'POST',
-            "data": arrUsr,
-            "dataType": "html"
-        }).done(function (resp) {
-            $("#listagem").html(resp);
-        }).fail(function (fail) {
-            alert("fail");
-        });
-    }
-
-    function cadastrar() {
-
-        arrCad = {
-            action: "cadastrar"
-        };
-
-        var url = "usuarios/cadastro_usuarios.php";
-
-        $.ajax({
-            "url": url,
-            "type": 'POST',
-            "data": arrCad,
-            "dataType": 'html'
-        }).done(function (resp) {
-            console.log(typeof (resp));
-            $("#listagem_maior").html(resp);
-        }).fail(function (fail) {
-            alert ("fail");
-        });
-    }
-</script>

@@ -1,0 +1,14 @@
+{
+    "name": "bprat/sticks",
+    "authors": [
+        {
+            "name": "Bruno Prates",
+            "email": "bprates10@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "";
+        }
+    }
+}

@@ -12,17 +12,39 @@ use \Helpers\Conexao;
 
 class EmpresasDAO extends BaseDAO
 {
-    public function getEmpresas($id = "")
+    public function getEmpresas($id = "", $ativo = "")
     {
         $resultados = [];
         try
         {
             $con = $this->getConexao();
             $con->connect();
-            $sql = "SELECT 	* FROM EMPRESAS";
+            $sql = "SELECT * FROM EMPRESAS";
 
-            if ($id != "")
-                $sql .= " WHERE ID = {$id}";
+            $arrCondicoes = [];
+            $i = 0;
+
+            if ($id != "") {
+                $arrCondicoes[$i] = "ID = {$id}";
+                $i++;
+            }
+            if ($ativo != "") {
+                $arrCondicoes[$i] = "ATIVO = {$ativo}";
+                $i++;
+            }
+
+            // Extrai o valor do array
+            if ($i > 0) {
+                $cont = 0;
+                foreach ($arrCondicoes as $condicao) {
+                    if ($cont == 0) {
+                        $sql .= " WHERE " . $condicao;
+                        $cont++;
+                    }
+                    else
+                        $sql .= " AND " . $condicao;
+                }
+            }
 
             $res = $con->query($sql);
             foreach($con->fetchAll($res) as $k => $v) {
@@ -31,6 +53,7 @@ class EmpresasDAO extends BaseDAO
                 $empresa->setNomefantasia($v['NOMEFANTASIA']);
                 $empresa->setRazaosocial($v['RAZAOSOCIAL']);
                 $empresa->setCnpj($v['CNPJ']);
+                $empresa->setAtivo($v['ATIVO']);
                 $resultados[] = $empresa;
             }
         } catch (\Exception $e) {

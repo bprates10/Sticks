@@ -8,11 +8,13 @@
 
 namespace Controllers;
 
+use DAO\ChamadosDAO;
 use DAO\UsuarioDAO;
 //use DAO\ChamadosDAO;
 //use Helpers\Conexao;
 use Helpers\ConexaoEmail;
 use DAO\ChamadosHistoricoDAO;
+use Models\Chamados;
 
 include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . "bootstrap.php";
 
@@ -30,6 +32,12 @@ class ChamadosController
         return $dao->getChamados($params);
     }
 
+    public function getChamadosPorEmpresa()
+    {
+        $dao = new ChamadosDAO();
+        return $dao->getChamadosPorEmpresa();
+    }
+
     public function getStatusChamados($param = "")
     {
         $dao = new \DAO\ChamadosStatusDAO();
@@ -40,6 +48,12 @@ class ChamadosController
     {
         $dao = new \DAO\ChamadosPrioridadeDAO();
         return $dao->getPrioridadeChamados();
+    }
+
+    public function alimentaGraficos()
+    {
+        $dao = new ChamadosDAO();
+        $dao->getDadosGraficos();
     }
 
     /* Efetua a leitura da caixa de e-mail.
@@ -113,5 +127,47 @@ class ChamadosController
             }
         }
         return false;
+    }
+
+    /* Efetua a contagem de chamados por status/prioridade
+     * Recebe um objeto Chamados
+     * Retorna um array chave-valor */
+    public function getChamadosFiltrados($param = [])
+    {
+
+        $contador = [
+            "urgente" => 0,
+            "total"   => 0,
+            "abertos" => 0,
+            "fechados"=> 0
+        ];
+
+        // Inicia a iteração em cada chamado
+        foreach ($param as $k=>$v)
+        {
+            // Verifica o status do chamado
+            switch (strtolower($v->getIdStatus()))
+            {
+                case "aberto":
+                case "respondido pelo atendente":
+                case "respondido pelo cliente":
+                case "em espera":
+                    $contador["abertos"]++;
+                    continue;
+                case "resolvido":
+                case "fechado":
+                    $contador["fechados"]++;
+                    continue;
+            }
+
+            switch (strtolower($v->getIdPriority()))
+            {
+                case "urgente":
+                    $contador["urgente"]++;
+                    continue;
+            }
+            $contador["total"]++;
+        }
+        return $contador;
     }
 }

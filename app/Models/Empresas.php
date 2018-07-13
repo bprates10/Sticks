@@ -15,6 +15,7 @@ class Empresas
     private $nomefantasia;
     private $razaosocial;
     private $cnpj;
+    private $ativo;
 
     public function getId()
     {
@@ -54,5 +55,15 @@ class Empresas
     public function setCnpj ($cnpj)
     {
         $this->cnpj = $cnpj;
+    }
+
+    public function getAtivo()
+    {
+        return $this->ativo;
+    }
+
+    public function setAtivo ($ativo)
+    {
+        $this->ativo = $ativo;
     }
 }

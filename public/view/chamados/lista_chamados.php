@@ -13,8 +13,11 @@ $empresasController = new \Controllers\EmpresasController();
 $empresas = $empresasController->buscaEmpresas();
 
 // Busca informação do combobox de status
-$chamadosStatusController = new \Controllers\ChamadosController();
-$chamadosStatus = $chamadosStatusController->getStatusChamados();
+$chamadosController = new \Controllers\ChamadosController();
+$chamadosStatus     = $chamadosController->getStatusChamados();
+
+// Busca informação dos totalizadores de chamados
+$chamadosTotal      = $chamadosController->getChamadosFiltrados($chamadosController->getChamados());
 
 // Busca informações do combobox de prioridades
 $chamadosPrioridadeController = new \Controllers\ChamadosController();
@@ -32,23 +35,25 @@ $lastUpdate = "";
 <div class="content-wrapper">
     <div class="container-fluid">
         <!-- Div Navegadora ou Breadcrumbs-->
-        <!--ol class="breadcrumb">
+        <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">Dashboard</a>
+            <a href="index.php">Início</a>
           </li>
-          <li class="breadcrumb-item active">My Dashboard</li>
-        </ol-->
+          <li class="breadcrumb-item active">Chamados</li>
+        </ol>
         <!-- FIM Div Navegadora ou Breadcrumbs-->
 
-        <!-- Icon Cards>
+        <!-- Ícones de Chamados -->
         <div class="row">
+
+            <!-- Total de Chamados Urgentes -->
             <div class="col-xl-3 col-sm-6 mb-3">
-                <div class="card text-white bg-primary o-hidden h-100">
+                <div class="card text-white bg-danger o-hidden h-10">
                     <div class="card-body">
                         <div class="card-body-icon">
                             <i class="fa fa-fw fa-comments"></i>
                         </div>
-                        <div class="mr-5">26 New Messages!</div>
+                        <div class="mr-5"><?= $chamadosTotal["urgente"] ?> Chamado(s) Urgente(s)!</div>
                     </div>
                     <a class="card-footer text-white clearfix small z-1" href="#">
                         <span class="float-left">View Details</span>
@@ -58,13 +63,15 @@ $lastUpdate = "";
                     </a>
                 </div>
             </div>
+
+            <!-- Total de Chamados -->
             <div class="col-xl-3 col-sm-6 mb-3">
-                <div class="card text-white bg-warning o-hidden h-100">
+                <div class="card text-white bg-success o-hidden h-10">
                     <div class="card-body">
                         <div class="card-body-icon">
                             <i class="fa fa-fw fa-list"></i>
                         </div>
-                        <div class="mr-5">11 New Tasks!</div>
+                        <div class="mr-5">Total de <?= $chamadosTotal["total"] ?> Chamados</div>
                     </div>
                     <a class="card-footer text-white clearfix small z-1" href="#">
                         <span class="float-left">View Details</span>
@@ -74,13 +81,15 @@ $lastUpdate = "";
                     </a>
                 </div>
             </div>
+
+            <!-- Total de Chamados Abertos -->
             <div class="col-xl-3 col-sm-6 mb-3">
-                <div class="card text-white bg-success o-hidden h-100">
+                <div class="card text-white bg-warning o-hidden h-10">
                     <div class="card-body">
                         <div class="card-body-icon">
                             <i class="fa fa-fw fa-shopping-cart"></i>
                         </div>
-                        <div class="mr-5">123 New Orders!</div>
+                        <div class="mr-5"><?= $chamadosTotal["abertos"] ?> Chamado(s) Aberto(s)</div>
                     </div>
                     <a class="card-footer text-white clearfix small z-1" href="#">
                         <span class="float-left">View Details</span>
@@ -90,13 +99,15 @@ $lastUpdate = "";
                     </a>
                 </div>
             </div>
+
+            <!-- Total de Chamados Fechados -->
             <div class="col-xl-3 col-sm-6 mb-3">
-                <div class="card text-white bg-danger o-hidden h-100">
+                <div class="card text-white bg-primary o-hidden h-10">
                     <div class="card-body">
                         <div class="card-body-icon">
                             <i class="fa fa-fw fa-support"></i>
                         </div>
-                        <div class="mr-5">13 New Tickets!</div>
+                        <div class="mr-5"><?= $chamadosTotal["fechados"] ?> Chamado(s) Fechados(s)</div>
                     </div>
                     <a class="card-footer text-white clearfix small z-1" href="#">
                         <span class="float-left">View Details</span>
@@ -499,55 +510,47 @@ $lastUpdate = "";
         <!--div class="loader" id="load""></div-->
 
     </div>
-    <!-- /.container-fluid-->
-    <!-- /.content-wrapper-->
-    <footer class="sticky-footer">
-        <div class="container">
-            <div class="text-center">
-                <small>Copyright © Your Website 2018</small>
-            </div>
-        </div>
-    </footer>
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fa fa-angle-up"></i>
-    </a>
-    <!-- Logout Modal-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Page level plugin JavaScript-->
-    <!-- MOVIDO LISTA_RELATORIOS.PHP script src="vendor/chart.js/Chart.min.js"></script-->
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
-    <!-- Custom scripts for this page-->
-    <script src="js/sb-admin-datatables.min.js"></script>
-    <script src="js/bootbox.min.js"></script>
-    <!-- MOVIDO LISTA_RELATORIOS.PHP script src="js/sb-admin-charts.min.js"></script-->
 </div>
 <!-- FIM Card Chamados -->
 
+<?= include "../footer.php"; ?>
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fa fa-angle-up"></i>
+</a>
+<!-- Logout Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Page level plugin JavaScript-->
+<!-- MOVIDO LISTA_RELATORIOS.PHP script src="vendor/chart.js/Chart.min.js"></script-->
+<script src="vendor/datatables/jquery.dataTables.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin.min.js"></script>
+<!-- Custom scripts for this page-->
+<script src="js/sb-admin-datatables.min.js"></script>
+<script src="js/bootbox.min.js"></script>
+<!-- MOVIDO LISTA_RELATORIOS.PHP script src="js/sb-admin-charts.min.js"></script-->
 <script>
     function pesquisarChamado() {
 

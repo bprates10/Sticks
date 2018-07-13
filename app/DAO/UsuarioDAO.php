@@ -14,7 +14,6 @@ class UsuarioDAO extends BaseDAO
 {
     public function getUsuarios($params = [])
     {
-        varz($params);
         $resultados = [];
         (isset($params['id']) && !empty($params['id'])) ? $id = $params['id'] : $id = "";
         (isset($params['email']) && ($params['email']) != 'all') ? $mail = $params['email'] : $mail = "";
@@ -32,7 +31,7 @@ class UsuarioDAO extends BaseDAO
                 $sql .= " WHERE LOWER(EMAIL) = LOWER('$mail')";
             elseif (!empty($idEmpresa))
                 $sql .= " WHERE ID_EMPRESA = {$idEmpresa}";
-            varz($sql);
+
             $res = $con->query($sql);
 
             foreach($con->fetchAll($res) as $k => $v) {
