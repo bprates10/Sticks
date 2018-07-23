@@ -107,9 +107,9 @@ class EmailsController
         try {
             $mail->Host = 'smtp.gmail.com.br'; // Endereço do servidor SMTP (Autenticação, utilize o host smtp.seudomínio.com.br)
             $mail->SMTPAuth   = true;  // Usar autenticação SMTP (obrigatório para smtp.seudomínio.com.br)
-            $mail->Port       = 587; //  Usar 587 porta SMTP
-            $mail->Username = 'bprates10@gmail.com'; // Usuário do servidor SMTP (endereço de email)
-            $mail->Password = 'charM1520#'; // Senha do servidor SMTP (senha do email usado)
+            $mail->Port       = xxx; //  Usar 587 porta SMTP
+            $mail->Username = 'xxx@gmail.com'; // Usuário do servidor SMTP (endereço de email)
+            $mail->Password = 'xxx'; // Senha do servidor SMTP (senha do email usado)
 
             //Define o remetente
             // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
